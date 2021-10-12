@@ -6,7 +6,7 @@ ARG GEOIP_LICENSE
 
 RUN apt-get update && apt-get install software-properties-common -y && \
     apt install mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
-    apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra -y
+    apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra python3-pip python3-jinja2 -y
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 RUN set -x; mkdir -p /geoip && \
@@ -15,6 +15,19 @@ RUN set -x; mkdir -p /geoip && \
     dpkg -i geoipupdate_4.8.0_linux_amd64.deb && \
     echo "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf && \
     geoipupdate
+
+# The following "path" variables can differ from the container defaults specified in the entrypoint.sh script.
+# These are *optional* for most BYOE installations, which do noot differ from the install location used.
+# in the container version of SC4S.  Failure to properly set these will cause startup failure.
+ENV SC4S_ETC=/etc/syslog-ng
+ENV SC4S_VAR=/var/lib/syslog-ng
+ENV SC4S_BIN=/usr/bin
+ENV SC4S_SBIN=/usr/sbin
+ENV SC4S_TLS=/etc/syslog-ng/tls
+
+COPY package/etc/conf.d /etc/syslog-ng/conf.d
+
+
 
 # # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
 
