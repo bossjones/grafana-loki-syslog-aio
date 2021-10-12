@@ -15,3 +15,5 @@ dc-up-generator:
 
 dc-down-generator:
 	docker-compose -f ./docker-compose-with-generator.yml down
+
+dc-reload: dc-down dc-up
