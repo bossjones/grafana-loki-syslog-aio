@@ -4,19 +4,18 @@ FROM balabit/syslog-ng:latest
 ARG GEOIP_ACCOUNTID
 ARG GEOIP_LICENSE
 
-# RUN apt-get update && apt-get install software-properties-common -y && \
-#     apt install geoipupdate mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
-#     apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl -y
 RUN apt-get update && apt-get install software-properties-common -y && \
     apt install mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
     apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra -y
 
+# SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 RUN set -x; mkdir -p /geoip && \
     cd /geoip && \
     wget https://github.com/maxmind/geoipupdate/releases/download/v4.8.0/geoipupdate_4.8.0_linux_amd64.deb && \
     dpkg -i geoipupdate_4.8.0_linux_amd64.deb && \
-    echo "UserId ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nProductIds GeoLite2-City" > /etc/GeoIP.conf && \
+    echo "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf && \
     geoipupdate
+
 # # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
 # RUN set -x; mkdir -p /geoip && \
 #     cd /geoip && \
