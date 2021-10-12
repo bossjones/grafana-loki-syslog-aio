@@ -1,4 +1,4 @@
-USE THIS TO FINISH DEBUGGING https://github.com/abalage/balagetech-openwrt-syslog-ng-elasticsearch/tree/master/syslog-ng/etc/syslog-ng
+USE THIS TO FINISH DEBUGGING https://github.com/abalage/balagetech-openwrt-syslog-ng-elasticsearch/tree/master/syslog-ng/etc/syslog-nghttps://raw.githubusercontent.com/splunk/splunk-connect-for-syslog/aea633d4623af5331167abc5227dab73b6637b04/package/etc/conf.d/conflib/_common/syslog_format.confhttps://raw.githubusercontent.com/splunk/splunk-connect-for-syslog/aea633d4623af5331167abc5227dab73b6637b04/package/etc/conf.d/conflib/_common/syslog_format.confhttps://raw.githubusercontent.com/splunk/splunk-connect-for-syslog/aea633d4623af5331167abc5227dab73b6637b04/package/etc/conf.d/conflib/_common/syslog_format.conf `SC4S_DEFAULT_TIMEZONESC4S_DEFAULT_TIMEZONE`
 
 
 
