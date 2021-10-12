@@ -20,3 +20,16 @@ scrape_configs:
   relabel_configs:
     - source_labels: ['__syslog_message_hostname']
       target_label: 'host'
+    # https://github.com/LukasPatzke/homesrv/blob/c249fbd2278443f12d0fef8ee18a317803da491d/monitoring/promtail.yml
+    - source_labels: ['__syslog_message_app_name']
+      target_label: 'app'
+    - source_labels: ['__syslog_message_severity']
+      target_label: 'severity'
+    - source_labels: ['__syslog_message_severity']
+      target_label: 'level'
+      regex: 'warning'
+      replacement: 'warning'
+    - source_labels: ['__syslog_message_severity']
+      target_label: 'level'
+      regex: 'informational'
+      replacement: 'info'
