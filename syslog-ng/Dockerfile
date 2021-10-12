@@ -1,6 +1,8 @@
 FROM balabit/syslog-ng:latest
 
-RUN apt-get update && apt-get install software-properties-common -y && add-apt-repository ppa:maxmind/ppa -y && apt update && apt install geoipupdate mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev gzip wget -y
+RUN apt-get update && apt-get install software-properties-common -y && \
+    apt install geoipupdate mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
+    apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl -y
 
 # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
 RUN set -x; mkdir -p /geoip && \
