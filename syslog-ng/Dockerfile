@@ -26,7 +26,7 @@ ENV SC4S_SBIN=/usr/sbin
 ENV SC4S_TLS=/etc/syslog-ng/tls
 
 COPY package/etc/conf.d /etc/syslog-ng/conf.d
-
+COPY package/etc/context_templates /etc/syslog-ng/context_templates
 
 
 # # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
