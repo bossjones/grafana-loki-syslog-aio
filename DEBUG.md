@@ -1,3 +1,11 @@
+USE THIS TO FINISH DEBUGGING https://github.com/abalage/balagetech-openwrt-syslog-ng-elasticsearch/tree/master/syslog-ng/etc/syslog-ng
+
+
+
+
+
+
+
 from https://community.graylog.org/t/syslog-from-ubiquiti-edgerouter/12546/2
 
 1. Linux should work out of box, if you configure as described in manual:
