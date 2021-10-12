@@ -1,11 +1,15 @@
 FROM balabit/syslog-ng:latest
 
+# https://github.com/jbonachera/docker-loki/blob/3749487d2a3b5b65bd2c49a0f4904589fad34b7c/Dockerfile
+# ARG GEOIP_ACCOUNTID
+# ARG GEOIP_LICENSE
+
 # RUN apt-get update && apt-get install software-properties-common -y && \
 #     apt install geoipupdate mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
 #     apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl -y
 RUN apt-get update && apt-get install software-properties-common -y && \
     apt install mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
-    apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl -y
+    apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoipupdate -y
 
 # # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
 # RUN set -x; mkdir -p /geoip && \
