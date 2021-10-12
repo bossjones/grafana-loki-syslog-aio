@@ -17,18 +17,7 @@ RUN set -x; mkdir -p /geoip && \
     geoipupdate
 
 # # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
-# RUN set -x; mkdir -p /geoip && \
-#     cd /geoip && \
-#     wget https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz && \
-#     wget https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz && \
-#     wget https://geolite.maxmind.com/download/geoip/database/GeoLite2-ASN.tar.gz && \
-#     gunzip GeoLite2-City.tar.gz && \
-#     gunzip GeoLite2-Country.tar.gz && \
-#     gunzip GeoLite2-ASN.tar.gz && \
-#     tar -xvf GeoLite2-City.tar && \
-#     tar -xvf GeoLite2-Country.tar && \
-#     tar -xvf GeoLite2-ASN.tar && \
-#     mv -v GeoLite2-*/*.mmdb . && \
-#     rm -rfv GeoLite2-{ASN,City,Country}_* && \
-#     rm -rfv *.tar && \
-#     rm -rfv *.tar.gz
+
+# https://github.com/splunk/splunk-connect-for-syslog/blob/main/package/Dockerfile
+# RUN curl -fsSL https://goss.rocks/install | GOSS_VER=v0.3.16 sh
+# COPY package/etc/goss.yaml /etc/syslog-ng/goss.yaml
