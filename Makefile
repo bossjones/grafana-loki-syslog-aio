@@ -1,4 +1,7 @@
-build:
+gpr:
+	git pull --rebase
+
+build: gpr
 	docker-compose -f ./docker-compose.yml build --build-arg GEOIP_ACCOUNTID=$(GEOIP_ACCOUNTID) --build-arg GEOIP_LICENSE=$(GEOIP_LICENSE)
 
 dc-up: build
