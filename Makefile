@@ -1,5 +1,5 @@
 dc-up:
-	docker-compose -f ./docker-compose.yml up -d
+	docker-compose -f ./docker-compose.yml up -d --build --build-arg GEOIP_ACCOUNTID=$(GEOIP_ACCOUNTID) --build-arg GEOIP_LICENSE=$(GEOIP_LICENSE)
 
 dc-down:
 	docker-compose -f ./docker-compose.yml down
