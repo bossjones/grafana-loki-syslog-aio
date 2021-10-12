@@ -6,6 +6,7 @@ build: gpr
 
 dc-up: build
 	docker-compose -f ./docker-compose.yml up -d
+	docker logs -f syslog-ng
 
 dc-down:
 	docker-compose -f ./docker-compose.yml down
