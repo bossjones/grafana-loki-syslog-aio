@@ -143,13 +143,14 @@ services:
   syslog-ng:
     build:
       context: ./syslog-ng
+    image: bossjones/syslog-ng:latest
     environment:
       TZ: "America/New_York"
     command: -edv
     container_name: syslog-ng
     depends_on:
     - promtail
-    image: balabit/syslog-ng:latest
+    # image: balabit/syslog-ng:latest
     networks:
       loki: null
     ports:
