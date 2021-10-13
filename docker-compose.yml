@@ -164,6 +164,20 @@ services:
     volumes:
     - ./config/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:ro
     - /etc/localtime:/etc/localtime:ro
+    - ./package/etc/conf.d/conflib/_common/t_templates.conf:/etc/conf.d/conflib/_common/t_templates.conf:ro
+    - ./package/etc/conf.d/conflib/_common/f_os.conf:/etc/conf.d/conflib/_common/f_os.conf:ro
+    - ./package/etc/conf.d/conflib/_common/syslog_format.conf:/etc/conf.d/conflib/_common/syslog_format.conf:ro
+    - ./package/etc/conf.d/conflib/_common/p_date-parser_nofilter.conf:/etc/conf.d/conflib/_common/p_date-parser_nofilter.conf:ro
+    - ./package/etc/conf.d/net_source/_common/app-ubiquiti_unifi.conf:/etc/conf.d/net_source/_common/app-ubiquiti_unifi.conf:ro
+    - ./package/etc/conf.d/conflib/raw/app-rfc5424.conf:/etc/conf.d/conflib/raw/app-rfc5424.conf:ro
+    - ./package/etc/conf.d/conflib/raw/app-syslog_epoch.conf:/etc/conf.d/conflib/raw/app-syslog_epoch.conf:ro
+    - ./package/etc/conf.d/conflib/raw/app-syslog_ISODATE.conf:/etc/conf.d/conflib/raw/app-syslog_ISODATE.conf:ro
+    - ./package/etc/conf.d/conflib/raw/app-syslog_json.conf:/etc/conf.d/conflib/raw/app-syslog_json.conf:ro
+    - ./package/etc/conf.d/conflib/raw/app-syslog-hostnodate.conf:/etc/conf.d/conflib/raw/app-syslog-hostnodate.conf:ro
+    - ./package/etc/conf.d/conflib/raw/app-ubiquiti_unifi.conf:/etc/conf.d/conflib/raw/app-ubiquiti_unifi.conf:ro
+    - ./package/etc/conf.d/conflib/syslog/app-json.conf:/etc/conf.d/conflib/syslog/app-json.conf:ro
+    - ./package/etc/conf.d/conflib/syslog/app-syslog-ng_error.conf:/etc/conf.d/conflib/syslog/app-syslog-ng_error.conf:ro
+    - ./package/etc/conf.d/conflib/syslog/app-syslog-ng_loggen.conf:/etc/conf.d/conflib/syslog/app-syslog-ng_loggen.conf:ro
     # - ./package/etc/conf.d:/etc/syslog-ng/conf.d:rw
     # - ./package/etc/context_templates:/etc/syslog-ng/context_templates:rw
 version: '3.3'
