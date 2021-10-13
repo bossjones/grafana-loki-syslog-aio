@@ -25,6 +25,7 @@ ENV SC4S_SBIN=/usr/sbin
 ENV SC4S_TLS=/etc/syslog-ng/tls
 ENV SC4S_LISTEN_1514_UDP_PORT=enabled
 ENV SC4S_LISTEN_1514_TCP_PORT=enabled
+ENV SC4S_LISTEN_1514_TOPIC=sc4s
 
 COPY package/etc/conf.d /etc/syslog-ng/conf.d
 COPY package/etc/context_templates /etc/syslog-ng/context_templates
