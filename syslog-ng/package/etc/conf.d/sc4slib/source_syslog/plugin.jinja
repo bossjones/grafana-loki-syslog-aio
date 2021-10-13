@@ -3,7 +3,7 @@ source s_{{ port_id }} {
     {%- if port_udp[0] != "disabled" or port_tcp[0] != "disabled"  or port_tls[0] != "disabled" %}
     channel {
         source {
-            # List UDP for any format             
+            # List UDP for any format
             {%- for port in port_udp %}
             {%- if port != "disabled" %}
             {%- for i in range(1, port_udp_sockets+1) %}
@@ -19,13 +19,13 @@ source s_{{ port_id }} {
                 use-dns(no)
                 use-fqdn(no)
                 chain-hostnames(off)
-                flags(validate-utf8, no-parse {%- if store_raw_message %} store-raw-message{% endif %})                
-            ); 
+                flags(validate-utf8, no-parse {%- if store_raw_message %} store-raw-message{% endif %})
+            );
             {%- endfor %}
             {%- endif %}
             {%- endfor %}
 
-            # List TCP for any format 
+            # List TCP for any format
             {%- for port in port_tcp %}
             {%- if port != "disabled" %}
             {%- for i in range(1,port_tcp_sockets+1) %}
@@ -43,13 +43,13 @@ source s_{{ port_id }} {
                 use-dns(no)
                 use-fqdn(no)
                 chain-hostnames(off)
-                flags(validate-utf8, no-parse {%- if store_raw_message %} store-raw-message{% endif %})                
-            ); 
+                flags(validate-utf8, no-parse {%- if store_raw_message %} store-raw-message{% endif %})
+            );
             {%- endfor %}
             {%- endif %}
             {%- endfor %}
 
-            # List TLS for any format 
+            # List TLS for any format
             {%- for port in port_tls %}
             {%- if port != "disabled" and use_tls %}
             {%- for i in range(1,port_tls_sockets+1) %}
@@ -67,28 +67,28 @@ source s_{{ port_id }} {
                 use-dns(no)
                 use-fqdn(no)
                 chain-hostnames(off)
-                flags(validate-utf8, no-parse {%- if store_raw_message %} store-raw-message{% endif %})                
+                flags(validate-utf8, no-parse {%- if store_raw_message %} store-raw-message{% endif %})
                 tls(
-                    allow-compress(yes)                
+                    allow-compress(yes)
                     key-file("{{ tls_dir }}/{{ key_file }}")
                     cert-file("{{ tls_dir }}/{{ cert_file }}")
                     ssl-options({{ port_tls_tls_options }})
                     cipher-suite("{{ port_tls_cipher_suit }}")
                     peer-verify(no)
-                )      
-            ); 
+                )
+            );
             {%- endfor %}
             {%- endif %}
-            {%- endfor %}            
+            {%- endfor %}
         };
 
-        rewrite(r_set_splunk_default);
-    
-        
+        # rewrite(r_set_splunk_default);
+
+
         if {
-            parser { 
-                app-parser(topic({{ topic }}-raw-syslog)); 
-            };        
+            parser {
+                app-parser(topic({{ topic }}-raw-syslog));
+            };
         } elif {
             filter{
                 message('^\<\d+\>') or message('^\w\w\w \d\d \d\d:\d\d:\d\d ')
@@ -96,8 +96,8 @@ source s_{{ port_id }} {
             parser {
                 syslog-parser(flags(assume-utf8, guess-timezone {%- if store_raw_message %},store-raw-message{% endif %}));
             };
-            rewrite(set_rfc3164);  
-            
+            rewrite(set_rfc3164);
+
             if {
                 # If program is probably not valid cleanup MESSAGE so log paths don't have too
                 # This isn't great for performance but is reliable good reason to use 5424
@@ -109,23 +109,23 @@ source s_{{ port_id }} {
                 rewrite {
                     set("$(template t_hdr_msg)" value("MSG"));
                     unset(value("LEGACY_MSGHDR"));
-                    unset(value("PID"));                
-                    unset(value("PROGRAM"));                
-                };                    
-            };           
-        } else {            
-        };     
+                    unset(value("PID"));
+                    unset(value("PROGRAM"));
+                };
+            };
+        } else {
+        };
 
         if {
-            parser { 
-                app-parser(topic({{ topic }}-syslog)); 
+            parser {
+                app-parser(topic({{ topic }}-syslog));
             };
         };
-        
+
 
         if {
             parser(p_add_context_host);
-        };        
+        };
         {%- if use_reverse_dns == True %}
         if {
             filter(f_host_is_ip);
@@ -135,26 +135,26 @@ source s_{{ port_id }} {
         rewrite {
             groupunset(values(".raw.*"));
             set('$(lowercase "$HOST")' value(HOST));
-        };        
-        
+        };
+
         parser(vendor_product_by_source);
         if {
-            parser { 
-                app-parser(topic({{ topic }}-network-source)); 
+            parser {
+                app-parser(topic({{ topic }}-network-source));
             };
-        };        
+        };
         if {
             filter {
                 "${fields.sc4s_vendor_product}" eq ""
             };
-            parser { 
-                app-parser(topic(fallback)); 
-            };                       
+            parser {
+                app-parser(topic(fallback));
+            };
         };
 
         if {
-            filter { 
-                match("." value(".netsource.sc4s_time_zone") ) 
+            filter {
+                match("." value(".netsource.sc4s_time_zone") )
             };
             rewrite {
                 fix-time-zone("${.netsource.sc4s_time_zone}");
@@ -162,11 +162,11 @@ source s_{{ port_id }} {
             };
         };
         parser {
-            p_add_context_splunk(); 
+            p_add_context_splunk();
         };
         parser (compliance_meta_by_source);
         filter{
-            "${fields.sc4s_vendor_product}" ne "null_queue"  
+            "${fields.sc4s_vendor_product}" ne "null_queue"
             and "${.netsource.sc4s_vendor_product}" ne "null_queue"
         };
     };
@@ -192,12 +192,12 @@ source s_{{ port_id }} {
                 use-fqdn(no)
                 chain-hostnames(off)
                 flags(validate-utf8)
-            ); 
+            );
             {%- endfor %}
             {%- endif %}
             {%- endfor %}
 
-            # List 6587 for any format 
+            # List 6587 for any format
             {%- for port in port_6587 %}
             {%- if port != "disabled" %}
             {%- for i in range(1,port_6587_sockets+1) %}
@@ -216,12 +216,12 @@ source s_{{ port_id }} {
                 use-fqdn(no)
                 chain-hostnames(off)
                 flags(validate-utf8)
-            ); 
+            );
             {%- endfor %}
             {%- endif %}
             {%- endfor %}
 
-            # List TLS for any format 
+            # List TLS for any format
             {%- for port in port_5425 %}
             {%- if port != "disabled" and use_tls %}
             {%- for i in range(1,port_5425_sockets+1) %}
@@ -241,46 +241,46 @@ source s_{{ port_id }} {
                 chain-hostnames(off)
                 flags(validate-utf8)
                 tls(
-                    allow-compress(yes)                
+                    allow-compress(yes)
                     key-file("{{ tls_dir }}/{{ key_file }}")
                     cert-file("{{ tls_dir }}/{{ cert_file }}")
                     ssl-options({{ port_5425_tls_options }})
                     cipher-suite("{{ port_5425_cipher_suit }}")
                     peer-verify(no)
-                )         
-            ); 
+                )
+            );
             {%- endfor %}
             {%- endif %}
-            {%- endfor %}       
+            {%- endfor %}
         };
-        rewrite(r_set_splunk_default);        
+        rewrite(r_set_splunk_default);
         rewrite {
             set("rfc5424_strict", value("fields.sc4s_syslog_format") );
         };
         if {
-            parser { 
-                app-parser(topic({{ topic }}-syslog)); 
+            parser {
+                app-parser(topic({{ topic }}-syslog));
             };
-        };        
-        
-    
+        };
+
+
         if {
             filter(f_host_is_nil_or_ip);
             parser(p_add_context_host);
-        };        
-        {%- if use_reverse_dns == True %}        
+        };
+        {%- if use_reverse_dns == True %}
         if {
             filter(f_host_is_nil_or_ip);
             parser(p_fix_host_resolver);
-        };        
+        };
         {%- endif %}
         rewrite {
             set('$(lowercase "$HOST")' value(HOST));
         };
         parser(vendor_product_by_source);
         if {
-            parser { 
-                app-parser(topic({{ topic }}-network-source)); 
+            parser {
+                app-parser(topic({{ topic }}-network-source));
             };
         };
 
@@ -288,14 +288,14 @@ source s_{{ port_id }} {
             filter {
                 "${fields.sc4s_vendor_product}" eq ""
             };
-            parser { 
-                app-parser(topic(fallback)); 
-            };                       
+            parser {
+                app-parser(topic(fallback));
+            };
         };
         parser {
-            p_add_context_splunk(); 
+            p_add_context_splunk();
         };
-        parser (compliance_meta_by_source);    
+        parser (compliance_meta_by_source);
     };
-    {%- endif %}    
+    {%- endif %}
 };
