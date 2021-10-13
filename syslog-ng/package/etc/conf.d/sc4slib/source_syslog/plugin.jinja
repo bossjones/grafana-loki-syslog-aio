@@ -253,10 +253,10 @@ source s_{{ port_id }} {
             {%- endif %}
             {%- endfor %}
         };
-        rewrite(r_set_splunk_default);
-        rewrite {
-            set("rfc5424_strict", value("fields.sc4s_syslog_format") );
-        };
+        # rewrite(r_set_splunk_default);
+        # rewrite {
+        #     set("rfc5424_strict", value("fields.sc4s_syslog_format") );
+        # };
         if {
             parser {
                 app-parser(topic({{ topic }}-syslog));
