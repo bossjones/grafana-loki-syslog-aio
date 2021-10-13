@@ -33,7 +33,7 @@ COPY package/etc/conf.d /etc/syslog-ng/conf.d
 COPY package/etc/context_templates /etc/syslog-ng/context_templates
 
 RUN mkdir -p $SC4S_VAR/log/
-
+# conf.d/conflib/_common/t_templates.conf
 
 # # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
 

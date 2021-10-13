@@ -164,6 +164,6 @@ services:
     volumes:
     - ./config/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:ro
     - /etc/localtime:/etc/localtime:ro
-    - ./package/etc/conf.d:/etc/syslog-ng/conf.d
-    - ./package/etc/context_templates:/etc/syslog-ng/context_templates
+    - ./package/etc/conf.d:/etc/syslog-ng/conf.d:rw
+    - ./package/etc/context_templates:/etc/syslog-ng/context_templates:rw
 version: '3.3'
