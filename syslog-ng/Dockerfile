@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install software-properties-common -y && \
     wget https://github.com/maxmind/geoipupdate/releases/download/v4.8.0/geoipupdate_4.8.0_linux_amd64.deb && \
     dpkg -i geoipupdate_4.8.0_linux_amd64.deb && \
     echo "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf && \
-    geoipupdate
+    geoipupdate && \
+    python3 -m pip install better_exceptions
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 
 # The following "path" variables can differ from the container defaults specified in the entrypoint.sh script.
@@ -26,6 +27,7 @@ ENV SC4S_TLS=/etc/syslog-ng/tls
 ENV SC4S_LISTEN_1514_UDP_PORT=1514
 ENV SC4S_LISTEN_1514_TCP_PORT=1514
 ENV SC4S_LISTEN_1514_TOPIC=sc4s
+ENV BETTER_EXCEPTIONS=1
 
 COPY package/etc/conf.d /etc/syslog-ng/conf.d
 COPY package/etc/context_templates /etc/syslog-ng/context_templates
