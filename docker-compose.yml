@@ -143,7 +143,7 @@ services:
   syslog-ng:
     build:
       context: ./syslog-ng
-    image: bossjones/syslog-ng:latest
+    image: 'bossjones/syslog-ng'
     environment:
       TZ: "America/New_York"
     command: -edv
