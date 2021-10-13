@@ -161,10 +161,10 @@ source s_{{ port_id }} {
                 unset(value(".netsource.sc4s_time_zone"));
             };
         };
-        {# parser {
-            p_add_context_splunk();
-        };
-        parser (compliance_meta_by_source); #}
+        # parser {
+        #     p_add_context_splunk();
+        # };
+        # parser (compliance_meta_by_source);
         filter{
             "${fields.sc4s_vendor_product}" ne "null_queue"
             and "${.netsource.sc4s_vendor_product}" ne "null_queue"
@@ -292,10 +292,10 @@ source s_{{ port_id }} {
                 app-parser(topic(fallback));
             };
         };
-        {# parser {
-            p_add_context_splunk();
-        };
-        parser (compliance_meta_by_source); #}
+        # parser {
+        #     p_add_context_splunk();
+        # };
+        # parser (compliance_meta_by_source);
     };
     {%- endif %}
 };
