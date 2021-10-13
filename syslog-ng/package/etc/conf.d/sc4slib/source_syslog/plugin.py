@@ -8,7 +8,7 @@ templateLoader = jinja2.FileSystemLoader(searchpath=plugin_path)
 templateEnv = jinja2.Environment(loader=templateLoader)
 tm = templateEnv.get_template("plugin.jinja")
 
-ports = os.getenv(f"SOURCE_ALL_SET", "1514,")
+ports = os.getenv(f"SOURCE_ALL_SET", "1514")
 
 if os.getenv(f"SC4S_IPV6_ENABLE", "no").lower() in [
     "true",
